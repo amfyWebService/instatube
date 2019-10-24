@@ -1,3 +1,6 @@
 {
-  "app_name": "Instatube"
+  "app_name": "Instatube",
+  "login": "Login",
+  "password": "Password",
+  "email": "Email"
 }

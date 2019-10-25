@@ -1,5 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:instatube/widgets/appbar.dart';
 import 'package:instatube/widgets/drawer.dart';
+import 'package:instatube/widgets/list_item_video.dart';
+import 'package:video_player/video_player.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -12,11 +16,22 @@ class _HomePageState extends State<HomePage> {
   Icon customIcon = Icon(Icons.search);
   Widget customSearchBar = Text("Search");
   String title ;
+  ScrollController _controller;
   final textFieldController = TextEditingController();
-  
 
+  @override
+  void initState() {
+    _controller = ScrollController();
+    super.initState();
+  
+  }
+
+  
+  
+  @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+  
+  return new Scaffold(
         appBar: AppBar(
         actions: <Widget>[
             IconButton(
@@ -65,8 +80,53 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-        body: Center(child: Text(textFieldController.text ?? "Home Page")),
-        drawer: AppDrawer()
+             body:  ListView(
+        controller: _controller,
+    
+        children: <Widget>[
+           CircularProgressIndicator(),
+          ChewieListItem(
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            ),
+            looping: true,
+          ),
+          ChewieListItem(
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            ),
+          ),
+          ChewieListItem(
+            // This URL doesn't exist - will display an error
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+            ),
+        
+          ),
+          ChewieListItem(
+            // This URL doesn't exist - will display an error
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+            ),
+        
+          ),
+          ChewieListItem(
+            // This URL doesn't exist - will display an error
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+            ),
+        
+          ),
+          ChewieListItem(
+            // This URL doesn't exist - will display an error
+            videoPlayerController: VideoPlayerController.network(
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+            ),
+        
+          )
+        ]
+      ),
+      drawer: AppDrawer(),
     );
-  }  
+  }
 }

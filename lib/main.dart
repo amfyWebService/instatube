@@ -4,6 +4,7 @@ import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:instatube/view/login_page.dart';
 import 'package:instatube/widgets/drawer.dart';
+import 'package:instatube/widgets/home.dart';
 import 'package:preferences/preferences.dart';
 
 void main() async{ 
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
            
-        body: LoginPage(),
+        body: Home(),
       drawer: AppDrawer(),
       )
     );

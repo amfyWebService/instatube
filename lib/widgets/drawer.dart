@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instatube/main.dart';
 import 'package:instatube/view/home_page.dart';
 import 'package:instatube/view/settings_page.dart';
+import 'package:instatube/view/test_page.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -20,12 +21,16 @@ class AppDrawer extends StatelessWidget {
               Navigator.push(context, new MaterialPageRoute(
               builder: (context) => new SettingsPage()))),
           Divider(),
-          _createDrawerItem(icon: Icons.input, text:'Logout',
-          onTap: () =>
-              Navigator.push(context, new MaterialPageRoute(
-              builder: (context) => new MyHomePage()))),
+          _createDrawerItem(
+              icon: Icons.input,
+              text: 'Logout',
+              onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MyHomePage()))),
           Divider(),
-         
+          _createDrawerItem(
+              icon: Icons.input,
+              text: 'test',
+              onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TestPage()))),
+          Divider(),
         ],
       ),
     );
@@ -60,8 +65,7 @@ class AppDrawer extends StatelessWidget {
   
 }
 
-Widget _createDrawerItem(
-    {IconData icon, String text, GestureTapCallback onTap}) {
+Widget _createDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
   return ListTile(
     title: Row(
       children: <Widget>[

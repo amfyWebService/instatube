@@ -2,5 +2,8 @@
   "app_name": "Instatube",
   "login": "Connexion",
   "password": "Mot de passe",
-  "email": "Email"
+  "email": "Email",
+  "error": {
+    "wrong_email_password": "Mauvais nom d'utilisateur ou mot de passe"
+  }
 }

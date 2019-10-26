@@ -8,9 +8,13 @@ class ChewieListItem extends StatefulWidget {
   // This will contain the URL/asset path which we want to play
   final VideoPlayerController videoPlayerController;
   final bool looping;
+  final double ratio;
+  final bool autoPlay;
 
   ChewieListItem({
     @required this.videoPlayerController,
+    @required this.ratio,
+    @required this.autoPlay,
     this.looping,
     Key key,
   }) : super(key: key);
@@ -24,15 +28,14 @@ class _ChewieListItemState extends State<ChewieListItem> {
 
   @override
   void initState() {
-    print("coucou");
 
     widget.videoPlayerController.setVolume(0.0);
     // Wrapper on top of the videoPlayerController
     _chewieController = ChewieController(
       
       videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 16 / 9,
-      autoPlay: true,
+      aspectRatio: widget.ratio,
+      autoPlay: widget.autoPlay,
       showControlsOnInitialize: false,
       
       // Prepare the video to be played and display the first frame

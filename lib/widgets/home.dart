@@ -2,6 +2,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:instatube/widgets/appbar.dart';
+import 'package:instatube/widgets/list_item_video.dart';
+import 'package:video_player/video_player.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -45,7 +47,7 @@ class _HomeState extends State<Home> {
         {
           return Container(
             constraints: BoxConstraints.tightFor(height:150.0),
-            child: Text(videos[index]),
+            child: index == 0 ? ChewieListItem(videoPlayerController: VideoPlayerController.network(videos[index]),ratio: 16/9,autoPlay: true, ): ChewieListItem(videoPlayerController: VideoPlayerController.network(videos[index]),ratio: 4/3,autoPlay: false,),
 
           );
         },
@@ -56,13 +58,12 @@ class _HomeState extends State<Home> {
 
   fetch() async
   {
-    Random r = Random();
-    videos.add(r.nextInt(200).toString());
+    videos.add( "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4");
   }
 
   fetchFive()
   {
-    for(int i =0; i< 5; i++)
+    for(int i =0; i< 9; i++)
     {
       fetch();
     }

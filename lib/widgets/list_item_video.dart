@@ -38,6 +38,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
       autoPlay: widget.autoPlay,
       showControlsOnInitialize: false,
       
+      
       // Prepare the video to be played and display the first frame
       autoInitialize: true,
       looping: widget.looping,
@@ -47,7 +48,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
         return Center(
           child: Text(
             errorMessage,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
         );
       },
@@ -59,9 +60,17 @@ class _ChewieListItemState extends State<ChewieListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(1.0),
       child: Chewie(
-        controller: _chewieController,
+        controller: _chewieController ..addListener((){
+          var play = widget.videoPlayerController.play();
+          if(play != null){
+            _chewieController.toggleFullScreen();
+          }
+        }
+          
+        ),
+        
       ),
     );
   }

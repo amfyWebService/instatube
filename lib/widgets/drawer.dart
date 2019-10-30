@@ -4,7 +4,15 @@ import 'package:instatube/view/home_page.dart';
 import 'package:instatube/view/settings_page.dart';
 import 'package:instatube/view/test_page.dart';
 
-class AppDrawer extends StatelessWidget {
+import '../core/utils/PreferenceService.dart';
+
+class AppDrawer extends StatefulWidget {
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -51,9 +59,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
             
-      accountName: Text("Ashish Rawat"),
-  accountEmail: Text("ashishrawat2911@gmail.com"),
-  currentAccountPicture: CircleAvatar(
+    accountName: Text(""),
+    accountEmail: Text(PreferenceService.user.email ?? ''),
+    currentAccountPicture: CircleAvatar(
      radius: 30.0,
      backgroundColor: Colors.transparent,
      backgroundImage:AssetImage("assets/images/profile.jpg")
@@ -61,8 +69,6 @@ class AppDrawer extends StatelessWidget {
                 
       ),
     );
-  
-  
 }
 
 Widget _createDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {

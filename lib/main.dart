@@ -14,7 +14,7 @@ void main() async {
   await PrefService.init(prefix: 'pref_');
 
   final HttpLink httpLink = HttpLink(
-    uri: 'http://10.0.2.2:3000/graphql',
+    uri: 'http://ec2-52-206-238-206.compute-1.amazonaws.com:8080/graphql',
   );
 
   final AuthLink authLink = AuthLink(

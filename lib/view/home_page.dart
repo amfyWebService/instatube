@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:instatube/widgets/drawer.dart';
-import 'package:instatube/widgets/home.dart';
 import 'package:instatube/widgets/list_item_video.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,22 +12,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController _scrollController = ScrollController();
   Icon customIcon = Icon(Icons.search);
   Widget customSearchBar = Text("Search");
   String title ;
   final textFieldController = TextEditingController();
+  bool isLoading =false;
+                      
   
-  List<String> videosLink= [
+  List<String> _videosLink= [
 
    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
   ];
+    @override
+  
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMore();
+      }else {
+        isLoading =false;
+      }
+    });
+  }
+
+  _loadMore() {
+    setState(() {
+      print('loading more,...');
+      _videosLink..addAll(List<String>.from(_videosLink));
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
 
-  
-  
   @override
   Widget build(BuildContext context) {
   
@@ -81,51 +106,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-             body: Home(),
-    
-        // children: <Widget>[
-        //   ChewieListItem(
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-        //     ),
-        //     looping: true,
-        //   ),
-        //   ChewieListItem(
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        //     ),
-        //   ),
-        //   ChewieListItem(
-        //     // This URL doesn't exist - will display an error
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        //     ),
-        
-        //   ),
-        //   ChewieListItem(
-        //     // This URL doesn't exist - will display an error
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-        //     ),
-        
-        //   ),
-        //   ChewieListItem(
-        //     // This URL doesn't exist - will display an error
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        //     ),
-        
-        //   ),
-        //   ChewieListItem(
-        //     // This URL doesn't exist - will display an error
-        //     videoPlayerController: VideoPlayerController.network(
-        //       'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-        //     ),
-        
-        //   )
-        // ]
-      
-      drawer: AppDrawer(),
+        body: ListView.builder(
+              controller: _scrollController,
+              itemCount: _videosLink.length,
+              itemBuilder: (BuildContext context, int index) {
+                return index == 0 ? ChewieListItem(videoPlayerController: VideoPlayerController.network(_videosLink[index]),ratio: 16/9,autoPlay: true, ): ChewieListItem(videoPlayerController: VideoPlayerController.network(_videosLink[index]),ratio: 16/9,autoPlay: false,);
+              },
+          ),
+        drawer: AppDrawer(),
     );
   }
 }

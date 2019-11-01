@@ -60,13 +60,19 @@ class _LoginPageState extends State<LoginPage> {
                       textInputType: TextInputType.emailAddress,
                       txtCtrl: txtCtrlEmail),
                   SizedBox(height: 25.0),
-                  field(hintTextKey: "password", style: style, context: context, obscureText: true, txtCtrl: txtCtrlPassword),
+                  field(
+                      hintTextKey: "password",
+                      style: style,
+                      context: context,
+                      obscureText: true,
+                      txtCtrl: txtCtrlPassword),
                   if (result.hasErrors)
                     Column(
                       children: <Widget>[
                         SizedBox(height: 25.0),
                         Text(
-                          FlutterI18n.translate(context, "error.wrong_email_password"),
+                          FlutterI18n.translate(
+                              context, "error.wrong_email_password"),
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.red),
                         )
@@ -74,24 +80,36 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   if (result.loading)
                     Column(
-                      children: <Widget>[SizedBox(height: 25.0), CircularProgressIndicator()],
+                      children: <Widget>[
+                        SizedBox(height: 25.0),
+                        CircularProgressIndicator()
+                      ],
                     ),
                   SizedBox(
                     height: 35.0,
                   ),
                   loginButton(context, style,
-                      onPressed:
-                          result.loading ? null : () => runMutation({"username": txtCtrlEmail.text, "password": txtCtrlPassword.text})),
+                      onPressed: result.loading
+                          ? null
+                          : () => runMutation({
+                                "username": txtCtrlEmail.text,
+                                "password": txtCtrlPassword.text
+                              })),
                   SizedBox(
                     height: 35.0,
                   ),
                   GestureDetector(
-                    onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => new RegisterPage()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => new RegisterPage()));
                     },
                     child: Center(
-                      child: Text(FlutterI18n.translate(context, "register_propose" ),textAlign: TextAlign.center)
-                    ),
+                        child: Text(
+                            FlutterI18n.translate(context, "register_propose" ),
+                            style: TextStyle(decoration: TextDecoration.underline),
+                            textAlign: TextAlign.center),),
                   ),
                   SizedBox(
                     height: 15.0,
@@ -114,7 +132,8 @@ class _LoginPageState extends State<LoginPage> {
             ..username = data['user']['username']);
           PreferenceService.user = user;
           PreferenceService.token = data['token'];
-          Navigator.pushReplacement(this.context, new MaterialPageRoute(builder: (context) => new HomePage()));
+          Navigator.pushReplacement(this.context,
+              new MaterialPageRoute(builder: (context) => new HomePage()));
         }
       },
     );
@@ -140,7 +159,8 @@ Widget field(
   );
 }
 
-Widget loginButton(BuildContext context, TextStyle style, {Function onPressed}) {
+Widget loginButton(BuildContext context, TextStyle style,
+    {Function onPressed}) {
   return Material(
     borderRadius: BorderRadius.circular(30.0),
     elevation: 5.0,
@@ -160,13 +180,16 @@ Widget loginButton(BuildContext context, TextStyle style, {Function onPressed}) 
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: onPressed,
         child: Text(FlutterI18n.translate(context, "login"),
-            textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     ),
   );
 }
 
-Widget registerButton(BuildContext context, TextStyle style, {Function onPressed}) {
+Widget registerButton(BuildContext context, TextStyle style,
+    {Function onPressed}) {
   return Material(
     borderRadius: BorderRadius.circular(30.0),
     elevation: 5.0,
@@ -186,9 +209,10 @@ Widget registerButton(BuildContext context, TextStyle style, {Function onPressed
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: onPressed,
         child: Text(FlutterI18n.translate(context, "register"),
-            textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     ),
   );
 }
-

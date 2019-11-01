@@ -4,6 +4,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:instatube/core/model/user.dart';
 import 'package:instatube/core/utils/PreferenceService.dart';
+import 'package:instatube/view/register_page.dart';
 
 import 'home_page.dart';
 
@@ -66,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 25.0),
                         Text(
                           FlutterI18n.translate(context, "error.wrong_email_password"),
+                          textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.red),
                         )
                       ],
@@ -81,6 +83,17 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed:
                           result.loading ? null : () => runMutation({"username": txtCtrlEmail.text, "password": txtCtrlPassword.text})),
                   SizedBox(
+                    height: 35.0,
+                  ),
+                  GestureDetector(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => new RegisterPage()));
+                    },
+                    child: Center(
+                      child: Text(FlutterI18n.translate(context, "register_propose" ),textAlign: TextAlign.center)
+                    ),
+                  ),
+                  SizedBox(
                     height: 15.0,
                   ),
                 ],
@@ -91,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       onCompleted: (dynamic resultData) {
         // if login ok
+        print(resultData.toString());
         if (resultData != null) {
           Map data = resultData["login"];
 
@@ -151,3 +165,30 @@ Widget loginButton(BuildContext context, TextStyle style, {Function onPressed}) 
     ),
   );
 }
+
+Widget registerButton(BuildContext context, TextStyle style, {Function onPressed}) {
+  return Material(
+    borderRadius: BorderRadius.circular(30.0),
+    elevation: 5.0,
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.0),
+        gradient: LinearGradient(
+          colors: <Color>[
+            Color(0xFF5E0075),
+            Color(0xFFFC0002),
+            Color(0xFFFFAD00),
+          ],
+        ),
+      ),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: onPressed,
+        child: Text(FlutterI18n.translate(context, "register"),
+            textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    ),
+  );
+}
+

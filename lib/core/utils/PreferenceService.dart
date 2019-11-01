@@ -18,6 +18,10 @@ class PreferenceService {
 
   static User get user {
     String userJsonString = PrefService.getString(KEY_AUTH_USER);
+    if(userJsonString == null){
+      return null;
+    }
+
     return serializers.deserialize(jsonDecode(userJsonString)) as User;
   }
 

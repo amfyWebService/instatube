@@ -107,10 +107,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
         body: ListView.builder(
+          addSemanticIndexes: false,
+          addRepaintBoundaries: false,
+              addAutomaticKeepAlives: false,
               controller: _scrollController,
               itemCount: _videosLink.length,
               itemBuilder: (BuildContext context, int index) {
-                return index == 0 ? ChewieListItem(videoPlayerController: VideoPlayerController.network(_videosLink[index]),ratio: 16/9,autoPlay: true, ): ChewieListItem(videoPlayerController: VideoPlayerController.network(_videosLink[index]),ratio: 16/9,autoPlay: false,);
+                return ChewieListItem(url: _videosLink[index],ratio: 16/9,autoPlay: index == 0, );
               },
           ),
         drawer: AppDrawer(),

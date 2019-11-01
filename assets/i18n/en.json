@@ -5,5 +5,11 @@
   "email": "Email",
   "error": {
     "wrong_email_password": "Wrong username or password"
-  }
+  },
+  "register" : "Register",
+  "register_propose": "Don't have an account? Register here.",
+  "repeat_password": "Repeat password",
+  "different_password_repeat": "The password and the repeat password don't match",
+  "set_all_fields" : "Please set all fields",
+  "verify_fields" : "Verify all fields"
 }

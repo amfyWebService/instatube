@@ -6,13 +6,13 @@ import 'package:video_player/video_player.dart';
 
 class ChewieListItem extends StatefulWidget {
   // This will contain the URL/asset path which we want to play
-  final VideoPlayerController videoPlayerController;
+  final String url;
   final bool looping;
   final double ratio;
   final bool autoPlay;
 
   ChewieListItem({
-    @required this.videoPlayerController,
+    @required this.url,
     @required this.ratio,
     @required this.autoPlay,
     this.looping,
@@ -24,16 +24,17 @@ class ChewieListItem extends StatefulWidget {
 }
 
 class _ChewieListItemState extends State<ChewieListItem> {
+  VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
   @override
   void initState() {
-
-    widget.videoPlayerController.setVolume(0.0);
+    _videoPlayerController = VideoPlayerController.network(widget.url);
+    _videoPlayerController.setVolume(0.0);
     // Wrapper on top of the videoPlayerController
     _chewieController = ChewieController(
       
-      videoPlayerController: widget.videoPlayerController,
+      videoPlayerController: _videoPlayerController,
       aspectRatio: widget.ratio,
       autoPlay: widget.autoPlay,
       showControlsOnInitialize: false,
@@ -63,7 +64,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
       padding: const EdgeInsets.all(1.0),
       child: Chewie(
         controller: _chewieController ..addListener((){
-          var play = widget.videoPlayerController.play();
+          var play = _videoPlayerController.play();
           if(play != null){
             _chewieController.toggleFullScreen();
           }
@@ -78,8 +79,9 @@ class _ChewieListItemState extends State<ChewieListItem> {
   @override
   void dispose() {
     super.dispose();
+    print('dispose ta mere');
     // IMPORTANT to dispose of all the used resources
-    //widget.videoPlayerController.dispose();
+    _videoPlayerController.dispose();
     _chewieController.dispose();
   }
 }

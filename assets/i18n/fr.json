@@ -5,5 +5,11 @@
   "email": "Email",
   "error": {
     "wrong_email_password": "Mauvais nom d'utilisateur ou mot de passe"
-  }
+  },
+  "register": "Inscription",
+  "register_propose": "Vous n'avez pas de compte? Inscrivez vous ici.",
+  "repeat_password" : "Repetez le mot de passe",
+  "different_password_repeat" : "Le mot de passe et sa verification sont différents",
+  "set_all_fields": "Saisissez tous les champs",
+  "verify_fields" : "Verifiez tous les champs"
 }

@@ -3,6 +3,7 @@ import 'package:instatube/main.dart';
 import 'package:instatube/view/home_page.dart';
 import 'package:instatube/view/settings_page.dart';
 import 'package:instatube/view/test_page.dart';
+import 'package:preferences/preference_service.dart';
 
 import '../core/utils/PreferenceService.dart';
 
@@ -22,7 +23,7 @@ class _AppDrawerState extends State<AppDrawer> {
           _createHeader(context),
           _createDrawerItem(icon: Icons.home, text: 'Home',
             onTap: () =>
-              Navigator.push(context, new MaterialPageRoute(
+              Navigator.pushReplacement(context, new MaterialPageRoute(
               builder: (context) => new HomePage()))),
           _createDrawerItem(icon: Icons.settings, text: 'Settings',
           onTap: () =>
@@ -32,12 +33,16 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
               icon: Icons.input,
               text: 'Logout',
-              onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MyHomePage()))),
+              onTap: () {
+                PrefService.sharedPreferences.clear();
+                Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new MyHomePage()));
+              } ,
+          ),
           Divider(),
           _createDrawerItem(
               icon: Icons.input,
               text: 'test',
-              onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TestPage()))),
+              onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new TestPage()))),
           Divider(),
         ],
       ),
@@ -59,8 +64,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
             
-    accountName: Text(""),
-    accountEmail: Text(PreferenceService.user.email ?? ''),
+    accountName: Text(PreferenceService.user?.username ?? ''), 
+    accountEmail: Text(PreferenceService.user?.email ?? ''),
     currentAccountPicture: CircleAvatar(
      radius: 30.0,
      backgroundColor: Colors.transparent,

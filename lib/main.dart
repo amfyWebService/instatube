@@ -92,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           body: LoginPage(),
-          drawer: AppDrawer(),
         ));
   }
 }

@@ -1,8 +1,12 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:instatube/core/service/videos_service.dart';
 import 'package:instatube/widgets/drawer.dart';
 import 'package:instatube/widgets/list_item_video.dart';
 import 'package:video_player/video_player.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -18,6 +22,11 @@ class _HomePageState extends State<HomePage> {
   String title ;
   final textFieldController = TextEditingController();
   bool isLoading =false;
+
+   _pickVideoFromCamera() async {
+    File video = await ImagePicker.pickVideo(source: ImageSource.camera);
+    if(video == null) return;
+  }
                       
   
   List<String> _videosLink= [
@@ -117,6 +126,27 @@ class _HomePageState extends State<HomePage> {
               },
           ),
         drawer: AppDrawer(),
-    );
+        floatingActionButton :Align(
+          child:FloatingActionButton(
+            onPressed: () {VideoService.uploadVideoFromCamera();},
+            child: Icon(Icons.videocam),
+            backgroundColor: Colors.red,
+          ),
+          alignment: FractionalOffset(0.55, 1.0)
+        ),
+        // ButtonTheme(
+        //   minWidth: 200.0,
+        //   height: 100.0, 
+        //     child: RaisedButton(
+        //       color: Colors.red,
+        //       shape: CircleBorder(),
+        //       onPressed: () {},
+        //       child: Icon(Icons.videocam),
+              
+        //     ),
+        //   ),
+        
+    
+  );
   }
 }

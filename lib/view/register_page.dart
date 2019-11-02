@@ -11,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  bool allFieldsAreSet = false;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   TextEditingController txtCtrlEmail = TextEditingController();
   TextEditingController txtCtrlPassword = TextEditingController();
@@ -28,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
         }
       }
     """;
+   
 
     return GestureDetector(
         onTap: (() => FocusScope.of(context).requestFocus(new FocusNode())),
@@ -83,33 +85,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputType: TextInputType.emailAddress,
                             txtCtrl: textCtrlRptPassword),
                         SizedBox(height: 25.0),
-                        if (txtCtrlPassword.text != textCtrlRptPassword.text)
-                          Column(
-                            children: <Widget>[
-                              SizedBox(height: 25.0),
-                              Text(
-                                FlutterI18n.translate(
-                                    context, "different_password_repeat"),
-                                style: TextStyle(color: Colors.red),
-                              )
-                            ],
-                          ),
-                        if (txtCtrlPassword.text == "" ||
-                            textCtrlRptPassword.text == "" ||
-                            txtCtrlEmail.text == "")
-                          Column(
-                            children: <Widget>[
-                              SizedBox(height: 25.0),
-                              Text(
-                                FlutterI18n.translate(
-                                    context, "set_all_fields"),
-                                style: TextStyle(color: Colors.red),
-                              )
-                            ],
-                          ),
+                        Column(
+                          children : <Widget>[
+                            _buildErrorMessage(context, txtCtrlPassword.text,textCtrlRptPassword.text, txtCtrlEmail.text),
+
+                            SizedBox(height: 25.0),
+                          ]
+                        ),
+
                         if (result.loading)
                           Column(
                             children: <Widget>[
+
                               SizedBox(height: 25.0),
                               CircularProgressIndicator()
                             ],
@@ -118,8 +105,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 35.0,
                         ),
                         registerButton(context, style,
-                            onPressed: result.loading
-                                ? null
+                            onPressed: result.loading || !allFieldsAreSet
+                                ? () => null
                                 : () => runMutation({
                                       "username": txtCtrlEmail.text,
                                       "password": txtCtrlPassword.text
@@ -145,6 +132,33 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ));
   }
+
+  Widget _buildErrorMessage (BuildContext context,String txtCtrlPassword, String textCtrlRptPassword, String txtCtrlEmail){
+   if (txtCtrlPassword == "" ||
+      textCtrlRptPassword == "" ||
+      txtCtrlEmail == ""){
+    allFieldsAreSet = false;
+    return Text(
+      FlutterI18n.translate(
+          context, "set_all_fields"),
+      style: TextStyle(color: Colors.black),
+    );
+  }
+  else if (txtCtrlPassword!=
+      textCtrlRptPassword){
+    allFieldsAreSet =false;
+    return Text(
+      FlutterI18n.translate(
+          context, "different_password_repeat"),
+      style: TextStyle(color: Colors.red),
+    );
+  }
+  else{
+    allFieldsAreSet = true;
+    return Text("");
+  }
+  
+}
 }
 
 Widget field(
@@ -194,3 +208,5 @@ Widget registerButton(BuildContext context, TextStyle style,
     ),
   );
 }
+
+

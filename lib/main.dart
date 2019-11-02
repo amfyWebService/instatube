@@ -5,7 +5,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:instatube/core/utils/PreferenceService.dart';
 import 'package:instatube/view/login_page.dart';
-import 'package:instatube/widgets/drawer.dart';
 import 'package:preferences/preferences.dart';
 
 void main() async {

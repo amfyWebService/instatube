@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:instatube/main.dart';
+import 'package:instatube/widgets/app_button.dart';
+import 'package:instatube/widgets/my_app_bar.dart';
+import 'package:instatube/widgets/text_i18n.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -16,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController txtCtrlEmail = TextEditingController();
   TextEditingController txtCtrlPassword = TextEditingController();
   TextEditingController textCtrlRptPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     String register = """
@@ -29,184 +32,86 @@ class _RegisterPageState extends State<RegisterPage> {
         }
       }
     """;
-   
 
-    return GestureDetector(
-        onTap: (() => FocusScope.of(context).requestFocus(new FocusNode())),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: Text(FlutterI18n.translate(context, "app_name")),
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    Color(0xFF5E0075),
-                    Color(0xFFFC0002),
-                    Color(0xFFFFAD00),
-                  ],
+    return Mutation(
+      options: MutationOptions(document: register),
+      builder: (RunMutation runMutation, QueryResult result) {
+        return Scaffold(
+          appBar: MyAppBar(
+            title: TextI18n(context, "register"),
+          ),
+          body: ListView(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 48),
+            children: <Widget>[
+              SizedBox(height: 45.0),
+              _buildField(hintTextKey: "email", textInputType: TextInputType.emailAddress, txtCtrl: txtCtrlEmail),
+              SizedBox(height: 25.0),
+              _buildField(hintTextKey: "password", obscureText: true, txtCtrl: txtCtrlPassword),
+              SizedBox(height: 25.0),
+              _buildField(hintTextKey: "repeat_password", obscureText: true, txtCtrl: textCtrlRptPassword),
+              SizedBox(height: 25.0),
+              Column(children: <Widget>[
+                _buildErrorMessage(txtCtrlPassword.text, textCtrlRptPassword.text, txtCtrlEmail.text),
+                SizedBox(height: 25.0),
+              ]),
+              if (result.loading)
+                Column(
+                  children: <Widget>[SizedBox(height: 25.0), CircularProgressIndicator()],
                 ),
+              SizedBox(
+                height: 35.0,
               ),
-            ),
+              AppButton.text(
+                  text: FlutterI18n.translate(context, "register"),
+                  style: style,
+                  onPressed: result.loading || !allFieldsAreSet
+                      ? () => null
+                      : () => runMutation({"username": txtCtrlEmail.text, "password": txtCtrlPassword.text})),
+//              SizedBox(
+//                height: 15.0,
+//              ),
+            ],
           ),
-          body: Mutation(
-            options: MutationOptions(document: register),
-            builder: (RunMutation runMutation, QueryResult result) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.all(12),
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        SizedBox(height: 45.0),
-                        field(
-                            hintTextKey: "email",
-                            style: style,
-                            context: context,
-                            textInputType: TextInputType.emailAddress,
-                            txtCtrl: txtCtrlEmail),
-                        SizedBox(height: 25.0),
-                        field(
-                            hintTextKey: "password",
-                            style: style,
-                            context: context,
-                            obscureText: true,
-                            txtCtrl: txtCtrlPassword),
-                        SizedBox(height: 25.0),
-                        field(
-                            hintTextKey: "repeat_password",
-                            style: style,
-                            context: context,
-                            obscureText: true,
-                            textInputType: TextInputType.emailAddress,
-                            txtCtrl: textCtrlRptPassword),
-                        SizedBox(height: 25.0),
-                        Column(
-                          children : <Widget>[
-                            _buildErrorMessage(context, txtCtrlPassword.text,textCtrlRptPassword.text, txtCtrlEmail.text),
-
-                            SizedBox(height: 25.0),
-                          ]
-                        ),
-
-                        if (result.loading)
-                          Column(
-                            children: <Widget>[
-
-                              SizedBox(height: 25.0),
-                              CircularProgressIndicator()
-                            ],
-                          ),
-                        SizedBox(
-                          height: 35.0,
-                        ),
-                        registerButton(context, style,
-                            onPressed: result.loading || !allFieldsAreSet
-                                ? () => null
-                                : () => runMutation({
-                                      "username": txtCtrlEmail.text,
-                                      "password": txtCtrlPassword.text
-                                    })),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-            onCompleted: (dynamic resultData) {
-              // if login ok
-              if (resultData != null) {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new MyHomePage()));
-              }
-            },
-          ),
-        ));
-  }
-
-  Widget _buildErrorMessage (BuildContext context,String txtCtrlPassword, String textCtrlRptPassword, String txtCtrlEmail){
-   if (txtCtrlPassword == "" ||
-      textCtrlRptPassword == "" ||
-      txtCtrlEmail == ""){
-    allFieldsAreSet = false;
-    return Text(
-      FlutterI18n.translate(
-          context, "set_all_fields"),
-      style: TextStyle(color: Colors.black),
+        );
+      },
+      onCompleted: (dynamic resultData) {
+        // if login ok
+        if (resultData != null) {
+          Navigator.pop(context);
+        }
+      },
     );
   }
-  else if (txtCtrlPassword!=
-      textCtrlRptPassword){
-    allFieldsAreSet =false;
-    return Text(
-      FlutterI18n.translate(
-          context, "different_password_repeat"),
-      style: TextStyle(color: Colors.red),
+
+  Widget _buildField({@required String hintTextKey, TextEditingController txtCtrl, TextInputType textInputType, bool obscureText = false}) {
+    return TextField(
+      obscureText: obscureText,
+      style: style,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: FlutterI18n.translate(context, hintTextKey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+      keyboardType: textInputType,
+      controller: txtCtrl,
     );
   }
-  else{
-    allFieldsAreSet = true;
-    return Text("");
+
+  Widget _buildErrorMessage(String txtCtrlPassword, String textCtrlRptPassword, String txtCtrlEmail) {
+    if (txtCtrlPassword == "" || textCtrlRptPassword == "" || txtCtrlEmail == "") {
+      allFieldsAreSet = false;
+      return Text(
+        FlutterI18n.translate(context, "set_all_fields"),
+        style: TextStyle(color: Colors.black),
+      );
+    } else if (txtCtrlPassword != textCtrlRptPassword) {
+      allFieldsAreSet = false;
+      return Text(
+        FlutterI18n.translate(context, "different_password_repeat"),
+        style: TextStyle(color: Colors.red),
+      );
+    } else {
+      allFieldsAreSet = true;
+      return Text("");
+    }
   }
-  
 }
-}
-
-Widget field(
-    {@required BuildContext context,
-    @required String hintTextKey,
-    TextStyle style,
-    TextEditingController txtCtrl,
-    TextInputType textInputType,
-    bool obscureText = false}) {
-  return TextField(
-    obscureText: obscureText,
-    style: style,
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: FlutterI18n.translate(context, hintTextKey),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    keyboardType: textInputType,
-    controller: txtCtrl,
-  );
-}
-
-Widget registerButton(BuildContext context, TextStyle style,
-    {Function onPressed}) {
-  return Material(
-    borderRadius: BorderRadius.circular(30.0),
-    elevation: 5.0,
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color(0xFF5E0075),
-            Color(0xFFFC0002),
-            Color(0xFFFFAD00),
-          ],
-        ),
-      ),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: onPressed,
-        child: Text(FlutterI18n.translate(context, "register"),
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    ),
-  );
-}
-
-

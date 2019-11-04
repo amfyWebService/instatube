@@ -2,29 +2,28 @@ import 'dart:io';
 
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instatube/core/utils/PreferenceService.dart';
 import 'package:instatube/core/utils/exceptions.dart';
+import 'package:instatube/core/utils/preference_service.dart';
 import 'package:path/path.dart' as path;
 
 class VideoService {
-
-  static uploadVideoFromCamera() async{
+  static uploadVideoFromCamera() async {
     var file = await pickVideoFromCamera();
-    if(file == null) return;
+    if (file == null) return;
     uploadVideo(file);
   }
 
-  static uploadVideoFromGalery() async{
+  static uploadVideoFromGalery() async {
     var file = await pickVideoFromGalery();
-    if(file == null) return;
+    if (file == null) return;
     uploadVideo(file);
   }
 
-  static Future<File> pickVideoFromCamera(){
+  static Future<File> pickVideoFromCamera() {
     return ImagePicker.pickVideo(source: ImageSource.camera);
   }
 
-  static Future<File> pickVideoFromGalery(){
+  static Future<File> pickVideoFromGalery() {
     return ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
   }
 
@@ -48,6 +47,5 @@ class VideoService {
         // send local notification (android only) for upload status
         tag: filename // unique tag for upload task
         );
-    
   }
 }

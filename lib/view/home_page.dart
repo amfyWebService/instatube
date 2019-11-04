@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:instatube/core/service/videos_service.dart';
 import 'package:instatube/widgets/drawer.dart';
 import 'package:instatube/widgets/list_item_video.dart';
@@ -23,11 +20,6 @@ class _HomePageState extends State<HomePage> {
   String title;
   final textFieldController = TextEditingController();
   bool isLoading = false;
-
-  _pickVideoFromCamera() async {
-    File video = await ImagePicker.pickVideo(source: ImageSource.camera);
-    if (video == null) return;
-  }
 
   List<String> _videosLink = [
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -71,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                   this.customIcon = Icon(Icons.cancel);
                   this.customSearchBar = TextField(
                       controller: textFieldController,
+                      autofocus: true,
                       textInputAction: TextInputAction.go,
                       decoration: InputDecoration(border: InputBorder.none, hintText: "Search Term"),
                       style: TextStyle(

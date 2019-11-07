@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instatube/main.dart';
 import 'package:instatube/view/home_page.dart';
+import 'package:instatube/view/profile_page.dart';
 import 'package:instatube/view/settings_page.dart';
 import 'package:instatube/view/test_page.dart';
 import 'package:preferences/preference_service.dart';
@@ -44,6 +45,10 @@ class _AppDrawerState extends State<AppDrawer> {
               text: 'test',
               onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new TestPage()))),
           Divider(),
+          _createDrawerItem(
+              icon: Icons.input,
+              text: 'profile',
+              onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new ProfilePage()))),
         ],
       ),
     );

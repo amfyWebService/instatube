@@ -25,13 +25,16 @@ dependencies:
 
   meta: ">=1.1.0 <2.0.0"
   built_value: ^6.7.1
+  path_provider: ^1.4.0
 
   provider: ^3.1.0+1
-  flutter_i18n: ^0.7.0
+  flutter_i18n: ^0.8.0
   preferences: ^5.0.1
   video_player: ^0.10.2+5
   chewie: ^0.9.8+1
   graphql_flutter: ^2.1.0
+  flutter_uploader: ^1.1.0
+  image_picker: ^0.6.1+4
 
 dev_dependencies:
   flutter_test:

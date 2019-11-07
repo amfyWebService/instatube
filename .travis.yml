@@ -2,8 +2,7 @@ language: dart
 
 dart:
   - 2.5.1
-  - stable
-  
+
 branches:
   only:
     - master

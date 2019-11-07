@@ -5,7 +5,7 @@ import 'package:instatube/widgets/drawer.dart';
 import 'package:instatube/widgets/list_item_video.dart';
 import 'package:video_player/video_player.dart';
 
-import '../core/utils/PreferenceService.dart';
+import '../core/utils/preference_service.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key key}) : super(key: key);

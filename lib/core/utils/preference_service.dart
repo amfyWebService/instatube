@@ -12,13 +12,15 @@ class PreferenceService {
     return PrefService.getString(KEY_AUTH_TOKEN);
   }
 
+  static get isLogged => token?.isNotEmpty ?? false;
+
   static set token(String token) {
     return PrefService.setString(KEY_AUTH_TOKEN, token);
   }
 
   static User get user {
     String userJsonString = PrefService.getString(KEY_AUTH_USER);
-    if(userJsonString == null){
+    if (userJsonString == null) {
       return null;
     }
 

@@ -6,6 +6,8 @@ import 'package:instatube/view/my_app.dart';
 import 'package:preferences/preferences.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final String apiBaseUrl = "http://ec2-52-206-238-206.compute-1.amazonaws.com:8080";
 
   await PrefService.init(prefix: 'pref_');

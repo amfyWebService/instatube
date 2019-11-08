@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:instatube/core/model/video.dart';
 import 'package:instatube/core/service/videos_service.dart';
 import 'package:instatube/widgets/drawer.dart';
 import 'package:instatube/widgets/list_item_video.dart';
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: _videos.length,
               itemBuilder: (BuildContext context, int index) {
                 return ChewieListItem(
-                  url: _videosLink[0],
+                  url: Video.getLink(context, _videos[index]),
                   ratio: 16 / 9,
                   autoPlay: index == 0,
                 );

@@ -20,6 +20,8 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/widgets.dart' as widgets;
+import 'package:instatube/core/Config.dart';
 
 part 'video.g.dart';
 
@@ -36,6 +38,10 @@ abstract class Video implements Built<Video, VideoBuilder> {
 
   Video._();
   factory Video([void Function(VideoBuilder) updates]) = _$Video;
+
+  static String getLink(widgets.BuildContext context, Map<String, dynamic> video) {
+    return Config.of(context).apiBaseUrl + "/${video['user_id']}/${video['filename']}";
+  }
 
 //  User({this.id, this.username, this.email});
 //

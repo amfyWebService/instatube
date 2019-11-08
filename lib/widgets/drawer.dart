@@ -31,8 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
           _buildDrawerItem(
               icon: Icons.person,
               textKey: 'profile',
-              onTap: () =>
-                  Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new ProfilePage()))),
+              onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProfilePage()))),
           Divider(),
           _buildDrawerItem(
             icon: Icons.input,

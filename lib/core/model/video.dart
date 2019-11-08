@@ -40,7 +40,7 @@ abstract class Video implements Built<Video, VideoBuilder> {
   factory Video([void Function(VideoBuilder) updates]) = _$Video;
 
   static String getLink(widgets.BuildContext context, Map<String, dynamic> video) {
-    return Config.of(context).apiBaseUrl + "/${video['user_id']}/${video['filename']}";
+    return Config.of(context).apiBaseUrl + "/videos/file/${video['user_id']}/${video['filename']}";
   }
 
 //  User({this.id, this.username, this.email});

@@ -3,7 +3,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:instatube/core/model/video.dart';
 import 'package:instatube/widgets/drawer.dart';
 import 'package:instatube/widgets/list_item_video.dart';
-import 'package:video_player/video_player.dart';
 
 import '../core/utils/preference_service.dart';
 
@@ -31,8 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _loadMore();
       } else {
         isLoading = false;
@@ -61,9 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return new Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))
-        ],
+        actions: <Widget>[IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
         title: customSearchBar,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -104,23 +100,22 @@ class _ProfilePageState extends State<ProfilePage> {
               options: QueryOptions(
                 document: fetchAll,
               ),
-              builder: (QueryResult result,
-                  {VoidCallback refetch, FetchMore fetchMore}) {
+              builder: (QueryResult result, {VoidCallback refetch, FetchMore fetchMore}) {
                 if (result.hashCode != null) {
                   print(result.errors.toString());
                 }
                 if (result.loading) {
                   return Text('Loading');
                 }
-                for(int i =0; i < 10;i++)
-                {
-                  Video v = new Video("test.mov","b5d5de","description","test");
-                  userVideo.add(v);
-
-                }
+//                for(int i =0; i < 10;i++)
+//                {
+//                  Video v = new Video("test.mov","b5d5de","description","test");
+//                  userVideo.add(v);
+//
+//                }
                 return Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(top:50.0),
+                    padding: EdgeInsets.only(top: 50.0),
                     child: ListView.builder(
                       addSemanticIndexes: false,
                       scrollDirection: Axis.vertical,
@@ -131,7 +126,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemCount: userVideo.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ChewieListItem(
-                          url: userVideo[index].getVideoLink(),
+//                          url: userVideo[index].getVideoLink(),
+                          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                           ratio: 16 / 9,
                           autoPlay: index == 0,
                         );

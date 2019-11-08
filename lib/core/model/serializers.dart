@@ -4,9 +4,10 @@
 
 import 'package:built_value/serializer.dart';
 import 'package:instatube/core/model/user.dart';
+import 'package:instatube/core/model/video.dart';
 
 part 'serializers.g.dart';
 
 /// Collection of generated serializers for the built_value chat example.
-@SerializersFor([User])
+@SerializersFor([User, Video])
 final Serializers serializers = _$serializers;

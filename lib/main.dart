@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:instatube/core/Config.dart';
@@ -8,7 +10,7 @@ import 'package:preferences/preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final String apiBaseUrl = "http://10.0.2.2:3000";
+  final String apiBaseUrl = Platform.isAndroid ? "http://10.0.2.2:3000" : "http://localhost:3000";
 
   await PrefService.init(prefix: 'pref_');
 

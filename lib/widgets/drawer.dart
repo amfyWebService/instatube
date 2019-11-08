@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instatube/view/home_page.dart';
-import 'package:instatube/view/profile_page.dart';
 import 'package:instatube/view/login_page.dart';
+import 'package:instatube/view/profile_page.dart';
 import 'package:instatube/view/settings_page.dart';
-import 'package:instatube/view/test_page.dart';
 import 'package:instatube/widgets/text_i18n.dart';
 
 import '../core/utils/preference_service.dart';
@@ -29,22 +28,23 @@ class _AppDrawerState extends State<AppDrawer> {
               icon: Icons.settings,
               textKey: SettingsPage.title,
               onTap: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => SettingsPage()))),
+          _buildDrawerItem(
+              icon: Icons.person,
+              textKey: 'profile',
+              onTap: () =>
+                  Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new ProfilePage()))),
           Divider(),
           _buildDrawerItem(
             icon: Icons.input,
             textKey: 'logout',
             onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => LoginPage())),
           ),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.input,
-              textKey: 'test',
-              onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => TestPage()))),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.input,
-              textKey: 'profile',
-              onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new ProfilePage()))),
+//          Divider(),
+//          _buildDrawerItem(
+//              icon: Icons.input,
+//              textKey: 'test',
+//              onTap: () => Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => TestPage()))),
+//          Divider(),
         ],
       ),
     );
@@ -65,8 +65,8 @@ class _AppDrawerState extends State<AppDrawer> {
       ),
       accountName: Text(PreferenceService.user?.username ?? ''),
       accountEmail: Text(PreferenceService.user?.email ?? ''),
-      currentAccountPicture:
-          CircleAvatar(radius: 30.0, backgroundColor: Colors.transparent, backgroundImage: AssetImage("assets/images/profile.jpg")),
+      currentAccountPicture: CircleAvatar(
+          radius: 30.0, backgroundColor: Colors.transparent, backgroundImage: AssetImage("assets/images/profile.jpg")),
     );
   }
 

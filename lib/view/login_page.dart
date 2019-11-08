@@ -57,9 +57,18 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 45.0),
                 field(
-                    hintTextKey: "email", style: style, context: context, textInputType: TextInputType.emailAddress, txtCtrl: txtCtrlEmail),
+                    hintTextKey: "email",
+                    style: style,
+                    context: context,
+                    textInputType: TextInputType.emailAddress,
+                    txtCtrl: txtCtrlEmail),
                 SizedBox(height: 25.0),
-                field(hintTextKey: "password", style: style, context: context, obscureText: true, txtCtrl: txtCtrlPassword),
+                field(
+                    hintTextKey: "password",
+                    style: style,
+                    context: context,
+                    obscureText: true,
+                    txtCtrl: txtCtrlPassword),
                 if (result.hasErrors)
                   Column(
                     children: <Widget>[
@@ -80,7 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 AppButton.text(
                   text: FlutterI18n.translate(context, "login"),
-                  onPressed: result.loading ? null : () => runMutation({"username": txtCtrlEmail.text, "password": txtCtrlPassword.text}),
+                  onPressed: result.loading
+                      ? null
+                      : () => runMutation({"username": txtCtrlEmail.text, "password": txtCtrlPassword.text}),
                   style: style,
                 ),
                 SizedBox(
@@ -108,7 +119,6 @@ class _LoginPageState extends State<LoginPage> {
       },
       onCompleted: (dynamic resultData) {
         // if login ok
-        print(resultData.toString());
         if (resultData != null) {
           Map data = resultData["login"];
 

@@ -7,8 +7,8 @@ import 'package:preferences/preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  final String apiBaseUrl = "http://localhost:3000";
+
+  final String apiBaseUrl = "http://10.0.2.2:3000";
 
   await PrefService.init(prefix: 'pref_');
 

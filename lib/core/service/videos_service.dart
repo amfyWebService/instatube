@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instatube/core/Config.dart';
 import 'package:instatube/core/utils/exceptions.dart';
 import 'package:instatube/core/utils/preference_service.dart';
 import 'package:instatube/view/upload_page.dart';
@@ -38,14 +39,12 @@ class VideoService {
 
     uploader.progress.listen((progress) => print(progress.progress.toString()));
     uploader.result.listen((UploadTaskResponse result) {
-      print("uploaded: ${result.response}");
-
       Map res = jsonDecode(result.response);
-  
-      Navigator.push(context, MaterialPageRoute(builder: (context) => UploadPage(res['filename'])));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => UploadPage(filename: res['filename'])));
     }, onError: (error) => print('error upload $error'));
+
     return await uploader.enqueue(
-        url: "http://ec2-52-206-238-206.compute-1.amazonaws.com:8080/videos/upload",
+        url: Config.of(context).apiBaseUrl + "/videos/upload",
         //required: url to upload to
         files: [FileItem(filename: filename, savedDir: path.dirname(file.path), fieldname: "video")],
         // required: list of files that you want to upload

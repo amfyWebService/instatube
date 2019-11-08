@@ -11,5 +11,6 @@
   "repeat_password" : "Repetez le mot de passe",
   "different_password_repeat" : "Le mot de passe et sa verification sont différents",
   "set_all_fields": "Saisissez tous les champs",
-  "verify_fields" : "Verifiez tous les champs"
+  "verify_fields" : "Verifiez tous les champs",
+  "upload_video": "charger la video"
 }

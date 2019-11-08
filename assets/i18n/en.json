@@ -11,5 +11,6 @@
   "repeat_password": "Repeat password",
   "different_password_repeat": "The password and the repeat password don't match",
   "set_all_fields" : "Please set all fields",
-  "verify_fields" : "Verify all fields"
+  "verify_fields" : "Verify all fields",
+  "upload_video": "Upload video"
 }

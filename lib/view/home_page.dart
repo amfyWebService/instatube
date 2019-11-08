@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instatube/core/service/videos_service.dart';
 import 'package:instatube/widgets/drawer.dart';
+import 'package:instatube/widgets/floatting_button_menu.dart';
 import 'package:instatube/widgets/list_item_video.dart';
 import 'package:instatube/widgets/my_app_bar.dart';
 
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<String> _videosLink= [
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
   ];
 
@@ -103,15 +105,18 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       drawer: AppDrawer(),
-      floatingActionButton: Align(
-          child: FloatingActionButton(
-            onPressed: () {
-              VideoService.uploadVideoFromCamera();
-            },
-            child: Icon(Icons.videocam),
-            backgroundColor: Colors.red,
-          ),
-          alignment: FractionalOffset(0.55, 1.0)),
+      floatingActionButton: FancyFab(),
+      
+      // floatingActionButton: Align(
+      //     child: FloatingActionButton(
+      //       onPressed: () {
+      //         VideoService.uploadVideoFromCamera();
+      //       },
+      //       child: Icon(Icons.videocam),
+      //       backgroundColor: Colors.red,
+      //     ),
+      //     alignment: FractionalOffset(0.55, 1.0)),
+          
       // ButtonTheme(
       //   minWidth: 200.0,
       //   height: 100.0,

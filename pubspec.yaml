@@ -34,7 +34,11 @@ dependencies:
   chewie: ^0.9.8+1
   graphql_flutter: ^2.1.0
   flutter_uploader: ^1.1.0
-  image_picker: ^0.6.1+4
+  image_picker:
+    git:
+      url: git://github.com/miguelpruivo/plugins.git
+      path: packages/image_picker
+      ref: image_picker-Fix-#41046
 
 dev_dependencies:
   flutter_test:

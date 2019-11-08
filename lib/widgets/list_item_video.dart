@@ -1,5 +1,3 @@
-
-
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -33,13 +31,11 @@ class _ChewieListItemState extends State<ChewieListItem> {
     _videoPlayerController.setVolume(0.0);
     // Wrapper on top of the videoPlayerController
     _chewieController = ChewieController(
-      
       videoPlayerController: _videoPlayerController,
       aspectRatio: widget.ratio,
       autoPlay: widget.autoPlay,
       showControlsOnInitialize: false,
-      
-      
+
       // Prepare the video to be played and display the first frame
       autoInitialize: true,
       looping: widget.looping,
@@ -63,15 +59,13 @@ class _ChewieListItemState extends State<ChewieListItem> {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Chewie(
-        controller: _chewieController ..addListener((){
-          var play = _videoPlayerController.play();
-          if(play != null){
-            _chewieController.toggleFullScreen();
-          }
-        }
-          
-        ),
-        
+        controller: _chewieController
+          ..addListener(() {
+            var play = _videoPlayerController.play();
+            if (play != null) {
+              _chewieController.toggleFullScreen();
+            }
+          }),
       ),
     );
   }
@@ -79,7 +73,6 @@ class _ChewieListItemState extends State<ChewieListItem> {
   @override
   void dispose() {
     super.dispose();
-    print('dispose ta mere');
     // IMPORTANT to dispose of all the used resources
     _videoPlayerController.dispose();
     _chewieController.dispose();
